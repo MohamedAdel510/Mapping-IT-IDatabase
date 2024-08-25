@@ -18,7 +18,7 @@ namespace Mapping_IT_IDatabase.Entites
         [InverseProperty("Department")]
         public ICollection<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
         [ForeignKey("Instructor")]
-        public int InsId { get; set; }
+        public int? InstructorId { get; set; }
         [InverseProperty("MangedDepartment")]
         public Instructor Instructor { get; set; }
     }

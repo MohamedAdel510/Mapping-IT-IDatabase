@@ -25,10 +25,10 @@ namespace Mapping_IT_IDatabase.Contextes
             modelBuilder.Entity<CourseInstructor>()
                 .HasKey(CI => new { CI.CourseId, CI.InstructorId });
 
-            modelBuilder.Entity<Department>()
-                .HasMany(D => D.Instructors)
-                .WithOne(Ins => Ins.Department)
-                .HasForeignKey(Ins => Ins.DeptId);
+            //modelBuilder.Entity<Department>()
+            //    .HasMany(D => D.Instructors)
+            //    .WithOne(Ins => Ins.Department)
+            //    .HasForeignKey(Ins => Ins.DeptId);
         }
 
         public DbSet<Student> Students { get; set; }

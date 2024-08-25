@@ -4,6 +4,7 @@ using Mapping_IT_IDatabase.Contextes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mapping_IT_IDatabase.Migrations
 {
     [DbContext(typeof(EnterpriseITIDbContext))]
-    partial class EnterpriseITIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240825143206_AddingRelationships")]
+    partial class AddingRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,8 +46,7 @@ namespace Mapping_IT_IDatabase.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<int?>("TopicId")
-                        .IsRequired()
+                    b.Property<int>("TopicId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -84,7 +86,7 @@ namespace Mapping_IT_IDatabase.Migrations
                     b.Property<DateTime>("HiringDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InstructorId")
+                    b.Property<int>("InstructorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -94,8 +96,7 @@ namespace Mapping_IT_IDatabase.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InstructorId")
-                        .IsUnique()
-                        .HasFilter("[InstructorId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Departments");
                 });
@@ -152,7 +153,7 @@ namespace Mapping_IT_IDatabase.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DeptId")
+                    b.Property<int>("DeptId")
                         .HasColumnType("int");
 
                     b.Property<string>("FName")
@@ -242,7 +243,9 @@ namespace Mapping_IT_IDatabase.Migrations
                 {
                     b.HasOne("Mapping_IT_IDatabase.Entites.Instructor", "Instructor")
                         .WithOne("MangedDepartment")
-                        .HasForeignKey("Mapping_IT_IDatabase.Entites.Department", "InstructorId");
+                        .HasForeignKey("Mapping_IT_IDatabase.Entites.Department", "InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Instructor");
                 });
@@ -260,7 +263,9 @@ namespace Mapping_IT_IDatabase.Migrations
                 {
                     b.HasOne("Mapping_IT_IDatabase.Entites.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DeptId");
+                        .HasForeignKey("DeptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });

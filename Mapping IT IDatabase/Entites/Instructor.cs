@@ -22,9 +22,8 @@ namespace Mapping_IT_IDatabase.Entites
         [MaxLength(50)]
         public decimal Address { get; set; }
         public decimal HourRate { get; set; }
-        [Required]
         [ForeignKey("Department")]
-        public int DeptId { get; set; }
+        public int? DepartmentId { get; set; }
         [InverseProperty("Instructors")]
         public Department Department { get; set; }
         [InverseProperty("Instructor")]

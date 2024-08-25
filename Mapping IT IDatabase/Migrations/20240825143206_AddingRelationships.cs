@@ -5,7 +5,7 @@
 namespace Mapping_IT_IDatabase.Migrations
 {
     /// <inheritdoc />
-    public partial class AddingRelations : Migration
+    public partial class AddingRelationships : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,14 +18,13 @@ namespace Mapping_IT_IDatabase.Migrations
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
-                name: "DeptId",
+                name: "DepartmentId",
                 table: "Instructors",
                 type: "int",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "InsId",
+                name: "InstructorId",
                 table: "Departments",
                 type: "int",
                 nullable: false,
@@ -94,14 +93,14 @@ namespace Mapping_IT_IDatabase.Migrations
                 column: "DeptId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Instructors_DeptId",
+                name: "IX_Instructors_DepartmentId",
                 table: "Instructors",
-                column: "DeptId");
+                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departments_InsId",
+                name: "IX_Departments_InstructorId",
                 table: "Departments",
-                column: "InsId",
+                column: "InstructorId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -129,20 +128,19 @@ namespace Mapping_IT_IDatabase.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Departments_Instructors_InsId",
+                name: "FK_Departments_Instructors_InstructorId",
                 table: "Departments",
-                column: "InsId",
+                column: "InstructorId",
                 principalTable: "Instructors",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Instructors_Departments_DeptId",
+                name: "FK_Instructors_Departments_DepartmentId",
                 table: "Instructors",
-                column: "DeptId",
+                column: "DepartmentId",
                 principalTable: "Departments",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Students_Departments_DeptId",
@@ -161,11 +159,11 @@ namespace Mapping_IT_IDatabase.Migrations
                 table: "Courses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Departments_Instructors_InsId",
+                name: "FK_Departments_Instructors_InstructorId",
                 table: "Departments");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Instructors_Departments_DeptId",
+                name: "FK_Instructors_Departments_DepartmentId",
                 table: "Instructors");
 
             migrationBuilder.DropForeignKey(
@@ -183,11 +181,11 @@ namespace Mapping_IT_IDatabase.Migrations
                 table: "Students");
 
             migrationBuilder.DropIndex(
-                name: "IX_Instructors_DeptId",
+                name: "IX_Instructors_DepartmentId",
                 table: "Instructors");
 
             migrationBuilder.DropIndex(
-                name: "IX_Departments_InsId",
+                name: "IX_Departments_InstructorId",
                 table: "Departments");
 
             migrationBuilder.DropIndex(
@@ -199,11 +197,11 @@ namespace Mapping_IT_IDatabase.Migrations
                 table: "Students");
 
             migrationBuilder.DropColumn(
-                name: "DeptId",
+                name: "DepartmentId",
                 table: "Instructors");
 
             migrationBuilder.DropColumn(
-                name: "InsId",
+                name: "InstructorId",
                 table: "Departments");
 
             migrationBuilder.DropColumn(

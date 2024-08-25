@@ -22,7 +22,7 @@ namespace Mapping_IT_IDatabase.Entites
         [Range(18, 40)]
         public int? Age { get; set; }
         [ForeignKey("Department")]
-        public int DeptId { get; set; }
+        public int? DeptId { get; set; }
         public Department Department { get; set; } // Navigational Property
         public ICollection<StudentCourse> Courses { get; set; } = new HashSet<StudentCourse>();
     }

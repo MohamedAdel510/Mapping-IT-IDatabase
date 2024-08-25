@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mapping_IT_IDatabase.Migrations
 {
     [DbContext(typeof(EnterpriseITIDbContext))]
-    [Migration("20240822121518_AddingRelations")]
-    partial class AddingRelations
+    [Migration("20240825151320_UpdateForeignKeyColumn")]
+    partial class UpdateForeignKeyColumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,8 @@ namespace Mapping_IT_IDatabase.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<int>("TopicId")
+                    b.Property<int?>("TopicId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -86,7 +87,7 @@ namespace Mapping_IT_IDatabase.Migrations
                     b.Property<DateTime>("HiringDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("InsId")
+                    b.Property<int?>("InstructorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -95,8 +96,9 @@ namespace Mapping_IT_IDatabase.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InsId")
-                        .IsUnique();
+                    b.HasIndex("InstructorId")
+                        .IsUnique()
+                        .HasFilter("[InstructorId] IS NOT NULL");
 
                     b.ToTable("Departments");
                 });
@@ -117,7 +119,7 @@ namespace Mapping_IT_IDatabase.Migrations
                     b.Property<decimal>("Bouns")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("DeptId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("HourRate")
@@ -133,7 +135,7 @@ namespace Mapping_IT_IDatabase.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeptId");
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Instructors");
                 });
@@ -153,7 +155,7 @@ namespace Mapping_IT_IDatabase.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeptId")
+                    b.Property<int?>("DeptId")
                         .HasColumnType("int");
 
                     b.Property<string>("FName")
@@ -243,9 +245,7 @@ namespace Mapping_IT_IDatabase.Migrations
                 {
                     b.HasOne("Mapping_IT_IDatabase.Entites.Instructor", "Instructor")
                         .WithOne("MangedDepartment")
-                        .HasForeignKey("Mapping_IT_IDatabase.Entites.Department", "InsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Mapping_IT_IDatabase.Entites.Department", "InstructorId");
 
                     b.Navigation("Instructor");
                 });
@@ -254,9 +254,7 @@ namespace Mapping_IT_IDatabase.Migrations
                 {
                     b.HasOne("Mapping_IT_IDatabase.Entites.Department", "Department")
                         .WithMany("Instructors")
-                        .HasForeignKey("DeptId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
@@ -265,9 +263,7 @@ namespace Mapping_IT_IDatabase.Migrations
                 {
                     b.HasOne("Mapping_IT_IDatabase.Entites.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DeptId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DeptId");
 
                     b.Navigation("Department");
                 });
