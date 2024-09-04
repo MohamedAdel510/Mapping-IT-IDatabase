@@ -16,7 +16,7 @@ namespace Mapping_IT_IDatabase.Entites
        public DateTime Duration { get; set; }
        [ForeignKey("Topic")]
        public int? TopicId { get; set; }
-       public Topic Topic { get; set; } //Navigational Property
+       public Topic? Topic { get; set; } //Navigational Property
        public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
        public ICollection<CourseInstructor> Instructors { get; set; } = new HashSet<CourseInstructor>();
     }
